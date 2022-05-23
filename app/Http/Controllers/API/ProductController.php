@@ -127,4 +127,34 @@ class ProductController extends Controller
             return response()->json($response, 200);
         }
     }
+
+    public function upload_photo(Request $request)
+    {
+        $data_validator = [
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+        $validator = Validator::make($request->all(), $data_validator);
+
+        if ($validator->fails()) {
+            $response = [
+                'code' => 400,
+                'message' => $validator->errors()->all(),
+                'data' => [],
+            ];
+        } else {
+            $image = $request->file('photo');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            $response = [
+                'code' => 200,
+                'message' => 'Photo uploaded',
+                'data' => [
+                    'photo' => '/images/' . $name,
+                ],
+            ];
+        }
+        return response()->json($response, 200);
+    }
 }

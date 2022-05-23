@@ -18,6 +18,7 @@ class MakeProductTable extends Migration
             $table->string('name', 255);
             $table->string('description', 255);
             $table->decimal('price', 10, 2);
+            $table->longText('image')->nullable();
             $table->integer('id_product_category');
             $table->timestamps();
             $table->softDeletes();
