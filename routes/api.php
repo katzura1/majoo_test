@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\API\ProductController;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,19 +21,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('product', 'API\ProductController@create');
-Route::get('product/{id?}', 'API\ProductController@read');
-Route::put('product/{id}', 'API\ProductController@update');
-Route::delete('product/{id}', 'API\ProductController@delete');
+Route::post('product', [ProductController::class, 'create']);
+Route::get('product/{id?}', [ProductController::class, 'read']);
+Route::put('product/{id}', [ProductController::class, 'update']);
+Route::delete('product/{id}', [ProductController::class, 'delete']);
 
-Route::post('product_category', 'API\ProductCategoryController@create');
-Route::get('product_category/{id?}', 'API\ProductCategoryController@read');
-Route::put('product_category/{id}', 'API\ProductCategoryController@update');
-Route::delete('product_category/{id}', 'API\ProductCategoryController@delete');
+Route::post('product_category', [ProductCategoryController::class, 'create']);
+Route::get('product_category/{id?}', [ProductCategoryController::class, 'read']);
+Route::put('product_category/{id}', [ProductCategoryController::class, 'update']);
+Route::delete('product_category/{id}', [ProductCategoryController::class, 'delete']);
 
-Route::post('admins', 'API\AdminController@create');
-Route::post('login', 'API\AdminController@login');
-Route::get('admins/{id?}', 'API\AdminController@read');
-Route::put('admins/{id}', 'API\AdminController@update');
-Route::put('admins/password/{id}', 'API\AdminController@update_password');
-Route::delete('admins/{id}', 'API\AdminController@delete');
+Route::post('admin', [AdminController::class, 'create']);
+Route::post('login', [AdminController::class, 'login']);
+Route::get('admin/{id?}', [AdminController::class, 'read']);
+Route::put('admin/{id}', [AdminController::class, 'update']);
+Route::put('admin/password/{id}', [AdminController::class, 'update_password']);
+Route::delete('admin/{id}', [AdminController::class, 'delete']);

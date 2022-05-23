@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +13,7 @@ class AdminController extends Controller
     {
         $data_validator = [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:admins',
             'password' => 'required|string|min:6',
         ];
 
@@ -28,11 +28,11 @@ class AdminController extends Controller
             return response()->json($response, 200);
         } else {
             $request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
-            $user = User::create($request->all());
+            $admin = Admin::create($request->all());
             $response = [
                 'code' => 201,
                 'message' => 'User created',
-                'data' => $user,
+                'data' => $admin,
             ];
             return response()->json($response, 200);
         }
@@ -41,20 +41,20 @@ class AdminController extends Controller
     public function read(Request $request, $id = '')
     {
         if (empty($id)) {
-            $users = User::all();
+            $admins = Admin::all();
             $response = [
                 'code' => 200,
-                'message' => 'Users read',
-                'data' => $users,
+                'message' => 'Admins read',
+                'data' => $admins,
             ];
             return response()->json($response, 200);
         } else {
-            $user = User::find($id);
-            if ($user) {
+            $admin = Admin::find($id);
+            if ($admin) {
                 $response = [
                     'code' => 200,
                     'message' => 'User read',
-                    'data' => $user,
+                    'data' => $admin,
                 ];
                 return response()->json($response, 200);
             } else {
@@ -69,11 +69,11 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        if ($user) {
+        $admin = Admin::find($id);
+        if ($admin) {
             $data_validator = [
                 'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+                'email' => 'required|string|email|max:255|unique:admins,email,' . $id,
             ];
 
             $validator = Validator::make($request->all(), $data_validator);
@@ -86,11 +86,11 @@ class AdminController extends Controller
                 ];
                 return response()->json($response, 200);
             } else {
-                $user->update($request->all());
+                $admin->update($request->all());
                 $response = [
                     'code' => 200,
                     'message' => 'User updated',
-                    'data' => $user,
+                    'data' => $admin,
                 ];
                 return response()->json($response, 200);
             }
@@ -105,8 +105,8 @@ class AdminController extends Controller
 
     public function update_password(Request $request, $id)
     {
-        $user = User::find($id);
-        if ($user) {
+        $admin = Admin::find($id);
+        if ($admin) {
             $data_validator = [
                 'password' => 'required|string|min:6',
             ];
@@ -121,11 +121,11 @@ class AdminController extends Controller
                 ];
                 return response()->json($response, 200);
             } else {
-                $user->update(['password' => password_hash($request['password'], PASSWORD_DEFAULT)]);
+                $admin->update(['password' => password_hash($request['password'], PASSWORD_DEFAULT)]);
                 $response = [
                     'code' => 200,
                     'message' => 'User password updated',
-                    'data' => $user,
+                    'data' => $admin,
                 ];
                 return response()->json($response, 200);
             }
@@ -140,9 +140,9 @@ class AdminController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $user = User::find($id);
-        if ($user) {
-            $user->delete();
+        $admin = Admin::find($id);
+        if ($admin) {
+            $admin->delete();
             $response = [
                 'code' => 200,
                 'message' => 'User deleted',
@@ -174,13 +174,13 @@ class AdminController extends Controller
                 'data' => [],
             ];
         } else {
-            $user = User::where('email', $request['email'])->first();
-            if ($user) {
-                if (password_verify($request['password'], $user->password)) {
+            $admin = Admin::where('email', $request['email'])->first();
+            if ($admin) {
+                if (password_verify($request['password'], $admin->password)) {
                     $response = [
                         'code' => 200,
                         'message' => 'User logged in',
-                        'data' => $user,
+                        'data' => $admin,
                     ];
                 } else {
                     $response = [
