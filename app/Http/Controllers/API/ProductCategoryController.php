@@ -12,7 +12,7 @@ class ProductCategoryController extends Controller
     public function create(Request $request)
     {
         $data_validator = [
-            'name' => 'required|numeric|unique:product_categories,name,NULL,id,deleted_at,NULL',
+            'name' => 'required|string|unique:product_categories,name,NULL,id,deleted_at,NULL',
         ];
 
         $validator = Validator::make($request->all(), $data_validator);
@@ -68,7 +68,7 @@ class ProductCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $data_validator = [
-            'name' => 'required|numeric|unique:product_categories,name,' . $id . ',id,deleted_at,NULL',
+            'name' => 'required|string|unique:product_categories,name,' . $id . ',id,deleted_at,NULL',
         ];
 
         $validator = Validator::make($request->all(), $data_validator);

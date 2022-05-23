@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\API\ProductCategoryController;
 use App\Http\Controllers\API\ProductController;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
