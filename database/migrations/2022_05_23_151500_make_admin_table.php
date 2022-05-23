@@ -20,6 +20,7 @@ class MakeAdminTable extends Migration
             $table->string('password', 255);
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['id', 'created_at']);
         });
     }
 

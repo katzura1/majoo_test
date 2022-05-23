@@ -18,6 +18,7 @@ class MakeProductCategoryTable extends Migration
             $table->string('name', 255);
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['id', 'created_at']);
         });
     }
 
