@@ -41,7 +41,7 @@ class ProductController extends Controller
     public function read($id = '')
     {
         if (empty($id)) {
-            $products = Product::all()->with('product_category');
+            $products = Product::all()->load('productCategory');
             $response = [
                 'code' => 200,
                 'message' => 'Products read',
@@ -49,7 +49,7 @@ class ProductController extends Controller
             ];
             return response()->json($response, 200);
         } else {
-            $product = Product::find($id)->with('product_category');
+            $product = Product::find($id)->load('productCategory');
             if ($product) {
                 $response = [
                     'code' => 200,
