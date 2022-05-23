@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('product', 'API\ProductController@create');
+Route::get('product/{id?}', 'API\ProductController@read');
+Route::put('product/{id}', 'API\ProductController@update');
+Route::delete('product/{id}', 'API\ProductController@delete');
+
+Route::post('product_category', 'API\ProductCategoryController@create');
+Route::get('product_category/{id?}', 'API\ProductCategoryController@read');
+Route::put('product_category/{id}', 'API\ProductCategoryController@update');
+Route::delete('product_category/{id}', 'API\ProductCategoryController@delete');

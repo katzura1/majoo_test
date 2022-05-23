@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProductController extends Controller
+class ProductCategoryController extends Controller
 {
     public function create(Request $request)
     {
         $data_validator = [
-            'name' => 'required|string|max:255|unique:products',
-            'description' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'id_product_category' => 'required|numeric|exists:product_categories,id',
+            'name' => 'required|numeric|unique:product_categories',
         ];
 
         $validator = Validator::make($request->all(), $data_validator);
@@ -28,39 +25,39 @@ class ProductController extends Controller
             ];
             return response()->json($response, 200);
         } else {
-            $product = Product::create($request->all());
+            $product_category = ProductCategory::create($request->all());
             $response = [
                 'code' => 201,
-                'message' => 'Product created',
-                'data' => $product,
+                'message' => 'Product category created',
+                'data' => $product_category,
             ];
             return response()->json($response, 200);
         }
     }
 
-    public function read($id = '')
+    public function read(Request $request, $id = '')
     {
         if (empty($id)) {
-            $products = Product::all()->with('product_category');
+            $product_categories = ProductCategory::all();
             $response = [
                 'code' => 200,
-                'message' => 'Products read',
-                'data' => $products,
+                'message' => 'Product categories read',
+                'data' => $product_categories,
             ];
             return response()->json($response, 200);
         } else {
-            $product = Product::find($id)->with('product_category');
-            if ($product) {
+            $product_category = ProductCategory::find($id);
+            if ($product_category) {
                 $response = [
                     'code' => 200,
-                    'message' => 'Product read',
-                    'data' => $product,
+                    'message' => 'Product category read',
+                    'data' => $product_category,
                 ];
                 return response()->json($response, 200);
             } else {
                 $response = [
                     'code' => 404,
-                    'message' => 'Product not found',
+                    'message' => 'Product category not found',
                     'data' => [],
                 ];
                 return response()->json($response, 200);
@@ -71,10 +68,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data_validator = [
-            'name' => 'required|string|max:255|unique:products,name,' . $id,
-            'description' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'id_product_category' => 'required|numeric|exists:product_categories,id',
+            'name' => 'required|numeric|unique:product_categories,name,' . $id,
         ];
 
         $validator = Validator::make($request->all(), $data_validator);
@@ -87,19 +81,19 @@ class ProductController extends Controller
             ];
             return response()->json($response, 200);
         } else {
-            $product = Product::find($id);
-            if ($product) {
-                $product->update($request->all());
+            $product_category = ProductCategory::find($id);
+            if ($product_category) {
+                $product_category->update($request->all());
                 $response = [
                     'code' => 200,
-                    'message' => 'Product updated',
-                    'data' => $product,
+                    'message' => 'Product category updated',
+                    'data' => $product_category,
                 ];
                 return response()->json($response, 200);
             } else {
                 $response = [
                     'code' => 404,
-                    'message' => 'Product not found',
+                    'message' => 'Product category not found',
                     'data' => [],
                 ];
                 return response()->json($response, 200);
@@ -109,19 +103,19 @@ class ProductController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $product = Product::find($id);
-        if ($product) {
-            $product->delete();
+        $product_category = ProductCategory::find($id);
+        if ($product_category) {
+            $product_category->delete();
             $response = [
                 'code' => 200,
-                'message' => 'Product deleted',
+                'message' => 'Product category deleted',
                 'data' => [],
             ];
             return response()->json($response, 200);
         } else {
             $response = [
                 'code' => 404,
-                'message' => 'Product not found',
+                'message' => 'Product category not found',
                 'data' => [],
             ];
             return response()->json($response, 200);
