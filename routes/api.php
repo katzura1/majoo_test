@@ -27,3 +27,10 @@ Route::post('product_category', 'API\ProductCategoryController@create');
 Route::get('product_category/{id?}', 'API\ProductCategoryController@read');
 Route::put('product_category/{id}', 'API\ProductCategoryController@update');
 Route::delete('product_category/{id}', 'API\ProductCategoryController@delete');
+
+Route::post('admins', 'API\AdminController@create');
+Route::post('login', 'API\AdminController@login');
+Route::get('admins/{id?}', 'API\AdminController@read');
+Route::put('admins/{id}', 'API\AdminController@update');
+Route::put('admins/password/{id}', 'API\AdminController@update_password');
+Route::delete('admins/{id}', 'API\AdminController@delete');
