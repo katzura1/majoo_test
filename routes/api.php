@@ -22,17 +22,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('product', [ProductController::class, 'create']);
+Route::get('product', [ProductController::class, 'read']);
 Route::get('product/{id?}', [ProductController::class, 'read']);
 Route::put('product/{id}', [ProductController::class, 'update']);
 Route::delete('product/{id}', [ProductController::class, 'delete']);
 
 Route::post('product_category', [ProductCategoryController::class, 'create']);
+Route::get('product_category', [ProductCategoryController::class, 'read']);
 Route::get('product_category/{id?}', [ProductCategoryController::class, 'read']);
 Route::put('product_category/{id}', [ProductCategoryController::class, 'update']);
 Route::delete('product_category/{id}', [ProductCategoryController::class, 'delete']);
 
 Route::post('admin', [AdminController::class, 'create']);
 Route::post('login', [AdminController::class, 'login']);
+Route::get('admin', [AdminController::class, 'read']);
 Route::get('admin/{id?}', [AdminController::class, 'read']);
 Route::put('admin/{id}', [AdminController::class, 'update']);
 Route::put('admin/password/{id}', [AdminController::class, 'update_password']);

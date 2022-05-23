@@ -13,7 +13,7 @@ class AdminController extends Controller
     {
         $data_validator = [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:admins',
+            'email' => 'required|string|email|max:255|unique:admins,email,NULL,id,deleted_at,NULL',
             'password' => 'required|string|min:6',
         ];
 
@@ -73,7 +73,7 @@ class AdminController extends Controller
         if ($admin) {
             $data_validator = [
                 'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:admins,email,' . $id,
+                'email' => 'required|string|email|max:255|unique:admins,email,' . $id . ',id,deleted_at,NULL',
             ];
 
             $validator = Validator::make($request->all(), $data_validator);

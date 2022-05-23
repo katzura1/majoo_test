@@ -12,7 +12,7 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $data_validator = [
-            'name' => 'required|string|max:255|unique:products',
+            'name' => 'required|string|max:255|unique:products,name,NULL,id,deleted_at,NULL',
             'description' => 'required|string|max:255',
             'price' => 'required|numeric',
             'id_product_category' => 'required|numeric|exists:product_categories,id',
@@ -71,7 +71,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data_validator = [
-            'name' => 'required|string|max:255|unique:products,name,' . $id,
+            'name' => 'required|string|max:255|unique:products,name,' . $id . ',id,deleted_at,NULL',
             'description' => 'required|string|max:255',
             'price' => 'required|numeric',
             'id_product_category' => 'required|numeric|exists:product_categories,id',
